@@ -21,6 +21,6 @@ jobs:
       - name: Install lightweight test dependencies
         run: python -m pip install --upgrade pip pytest
       - name: Compile Python files
-        run: python -m compileall -q app.py studio_utils.py
+        run: python -m compileall -q app.py chat.py image.py studio_utils.py
       - name: Run tests
         run: python -m pytest -q
