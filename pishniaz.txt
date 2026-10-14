@@ -1,0 +1,7 @@
+# Run this in a Google Colab code cell before starting a model:
+!pip install -q transformers diffusers accelerate bitsandbytes gradio safetensors invisible-watermark sentencepiece protobuf
+
+# Suggested optional negative prompt:
+censored, mosaic censoring, bar censor, blur, bad eyes, poorly drawn face, poorly drawn hands, missing fingers, extra limbs, fused fingers, distorted anatomy, low quality, jpeg artifacts, monochrome, mutated, bad proportions, watermark, text
+
+# Check each model card for its license and usage conditions.
