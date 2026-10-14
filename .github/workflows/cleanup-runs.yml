@@ -1,0 +1,33 @@
+name: Keep latest 30 workflow runs
+
+on:
+  schedule:
+    - cron: "23 3 * * 0"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: workflow-run-retention
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs older than the latest 30
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run list --repo "$GH_REPO" --limit 1000 --json databaseId,workflowName,createdAt,status \
+            | jq -r 'sort_by(.createdAt) | reverse | .[30:][] | .databaseId' \
+            | while read -r run_id; do
+                [ -n "$run_id" ] || continue
+                echo "Deleting old workflow run $run_id"
+                gh run delete "$run_id" --repo "$GH_REPO" || true
+              done
