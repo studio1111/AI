@@ -8,4 +8,5 @@ sentencepiece>=0.2.0
 protobuf>=4.25.0
 gradio>=5.0.0
 Pillow>=10.4.0
+invisible-watermark>=0.2.0
 pytest>=8.3.0
