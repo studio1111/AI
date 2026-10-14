@@ -17,6 +17,16 @@ ASPECT_RATIOS = {
 BASE_NEGATIVE = ("score_4, score_5, score_6, (worst quality, low quality:1.4), "
                  "bad anatomy, deformed limbs, bad hands, missing fingers, extra limbs, blurry")
 
+def unload_pipeline():
+    """Release the image pipeline so the chat model can use GPU memory."""
+    global PIPE
+    if PIPE is not None:
+        del PIPE
+        PIPE = None
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
 def load_pipeline():
     global PIPE
     if not torch.cuda.is_available():
