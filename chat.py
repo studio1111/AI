@@ -9,6 +9,20 @@ MODEL_ID = os.getenv("CHAT_MODEL_ID", "mlabonne/Daredevil-8B-abliterated")
 _model = _tokenizer = None
 _lock = threading.RLock()
 
+def unload_model():
+    """Release the chat model so the image pipeline can use GPU memory."""
+    global _model, _tokenizer
+    with _lock:
+        if _model is not None:
+            del _model
+            _model = None
+        if _tokenizer is not None:
+            del _tokenizer
+            _tokenizer = None
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
 def load_model():
     global _model, _tokenizer
     if not torch.cuda.is_available():
