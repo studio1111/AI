@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 ASPECT_RATIOS: dict[str, tuple[int, int]] = {
-    "16:9 Landscape": (1216, 684),
+    "16:9 Landscape": (1152, 648),
     "1:1 Square": (1024, 1024),
-    "9:16 Portrait": (684, 1216),
+    "9:16 Portrait": (648, 1152),
     "4:3 Classic": (1152, 864),
 }
 
